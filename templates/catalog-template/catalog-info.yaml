@@ -1,0 +1,12 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: ${{ values.name }}
+  description: Namespace OpenShift criado via RHDH
+  annotations:
+    backstage.io/kubernetes-id: ${{ values.name }}
+    backstage.io/kubernetes-namespace: ${{ values.name }}
+spec:
+  type: kubernetes-namespace
+  owner: user:default/guest
+  system: default
