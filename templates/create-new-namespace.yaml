@@ -4,7 +4,7 @@ kind: Template
 metadata:
   name: create-openshift-namespace
   title: "Criar Namespace no OpenShift - V3"
-  description: "Provisionamento automático de namespaces no cluster PROCERGS"
+  description: "Provisionamento automático de namespaces no cluster POC"
   tags:
     - openshift
     - infra
