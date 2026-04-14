@@ -3,7 +3,7 @@ kind: Template
 metadata:
   name: ansible-job-http-test
   title: Teste Ansible via HTTP
-  description: Executa um Job Template do Ansible Automation Platform via API HTTP
+  description: Executa um Job Template do Ansible Automation Platform via proxy do Backstage
 spec:
   owner: platform-team
   type: service
@@ -11,26 +11,12 @@ spec:
   parameters:
     - title: Parâmetros do Job
       required:
-        - controllerUrl
         - jobTemplateId
-        - ansibleToken
       properties:
-        controllerUrl:
-          title: URL do Automation Controller
-          type: string
-          default: https://seu-controller.exemplo.com
-          description: URL base do AAP Controller
-
         jobTemplateId:
           title: ID do Job Template
           type: string
           description: Exemplo 42
-
-        ansibleToken:
-          title: Token do AAP
-          type: string
-          ui:widget: password
-          description: Token Bearer do Automation Controller
 
         mensagem:
           title: Mensagem de teste
@@ -43,10 +29,10 @@ spec:
       action: http:backstage:request
       input:
         method: POST
-        url: '${{ parameters.controllerUrl }}/api/v2/job_templates/${{ parameters.jobTemplateId }}/launch/'
+        path: /proxy/aap/api/v2/job_templates/${{ parameters.jobTemplateId }}/launch/
         headers:
           Content-Type: application/json
-          Authorization: 'Bearer ${{ parameters.ansibleToken }}'
+          Accept: application/json
         body:
           extra_vars:
             mensagem: '${{ parameters.mensagem }}'
@@ -55,6 +41,5 @@ spec:
     text:
       - title: Resultado
         content: |
-          Job enviado com sucesso.
           Resposta da API:
           ${{ steps['launch-job'].output.body }}
