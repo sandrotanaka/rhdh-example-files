@@ -2,47 +2,37 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 
 metadata:
-  name: create-namespace-simple
+  name: create-openshift-namespace
   title: Criar Namespace no OpenShift
-  description: Cria um namespace no cluster OpenShift usando a action kubernetes:create-namespace
+  description: Provisionamento automático de namespaces
   tags:
-    - kubernetes
     - openshift
-    - namespace
+    - infra
 
 spec:
   owner: user:default/guest
   type: service
 
   parameters:
-    - title: Dados do Namespace
+    - title: Configurações do Projeto
       required:
         - namespace
-        - token
       properties:
         namespace:
-          title: Nome do namespace
+          title: Nome do Namespace
           type: string
-          description: Nome do namespace que será criado no OpenShift
           pattern: '^[a-z0-9]([-a-z0-9]*[a-z0-9])?$'
           ui:autofocus: true
-        token:
-          title: Token do cluster
-          type: string
-          description: Token Bearer para autenticação na API do cluster
-          ui:field: Secret
 
   steps:
-    - id: create-namespace
-      name: Criar namespace no OpenShift
+    - id: create-kubernetes-namespace
+      name: Criar namespace
       action: kubernetes:create-namespace
       input:
         namespace: ${{ parameters.namespace }}
         clusterRef: ocp-cluster
-        token: ${{ secrets.token }}
 
   output:
-    text:
-      - title: Namespace criado
-        content: |
-          O namespace `${{ parameters.namespace }}` foi enviado para criação no cluster `ocp-cluster`.
+    links:
+      - title: Acessar Console do OpenShift
+        url: https://console-openshift-console.apps.XXX.dynamic.redhatworkshops.io/k8s/cluster/projects/${{ parameters.namespace }}
