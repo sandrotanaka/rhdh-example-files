@@ -1,0 +1,38 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: ansible-job-http-min
+  title: Teste Job Ansible Min
+spec:
+  owner: platform-team
+  type: service
+
+  parameters:
+    - title: Teste
+      required:
+        - mensagem
+      properties:
+        mensagem:
+          title: Mensagem
+          type: string
+          default: teste-rhdh
+
+  steps:
+    - id: launch
+      name: Launch Job
+      action: http:backstage:request
+      input:
+        method: POST
+        url: 'https://seu-controller.exemplo.com/api/v2/job_templates/42/launch/'
+        headers:
+          Content-Type: application/json
+          Authorization: 'Bearer ${{ secrets.ANSIBLE_TOKEN }}'
+        body:
+          extra_vars:
+            mensagem: '${{ parameters.mensagem }}'
+
+  output:
+    text:
+      - title: API response
+        content: |
+          ${{ steps['launch'].output.body }}
