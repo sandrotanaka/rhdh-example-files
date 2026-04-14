@@ -3,7 +3,7 @@ kind: Template
 
 metadata:
   name: create-openshift-namespace
-  title: "Criar Namespace no OpenShift - V3"
+  title: "Criar Namespace no OpenShift - SIMPLES"
   description: "Provisionamento automático de namespaces no cluster POC"
   tags:
     - openshift
