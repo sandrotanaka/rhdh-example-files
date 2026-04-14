@@ -1,0 +1,55 @@
+plugins:
+  - package: ./dynamic-plugins/dist/backstage-community-plugin-scaffolder-backend-module-kubernetes-dynamic
+    disable: false
+  - package: ./dynamic-plugins/dist/backstage-plugin-scaffolder-backend-module-github-dynamic
+    disable: false
+  - package: ./dynamic-plugins/dist/roadiehq-scaffolder-backend-module-http-request-dynamic
+    disable: false
+  # Microsoft Azure Plugins
+  - package: oci://ghcr.io/redhat-developer/rhdh-plugin-export-overlays/backstage-community-plugin-search-backend-module-azure-devops:bs_1.45.3__0.1.2
+    disable: false
+  - disabled: true
+    package: 'oci://registry.redhat.io/ansible-automation-platform/automation-portal:2.1!ansible-plugin-backstage-rhaap'
+    pluginConfig:
+      dynamicPlugins:
+        frontend:
+          ansible.plugin-backstage-rhaap:
+            appIcons:
+              - importName: AnsibleLogo
+                name: AnsibleLogo
+            dynamicRoutes:
+              - importName: AnsiblePage
+                menuItem:
+                  icon: AnsibleLogo
+                  text: Ansible
+                path: /ansible
+  - disabled: true
+    package: 'oci://registry.redhat.io/ansible-automation-platform/automation-portal:2.1!ansible-plugin-scaffolder-backend-module-backstage-rhaap'
+    pluginConfig:
+      dynamicPlugins:
+        backend:
+          ansible.plugin-scaffolder-backend-module-backstage-rhaap: null
+  - disabled: false
+    package: 'http://plugin-registry:8080/ansible-plugin-backstage-rhaap-dynamic-2.1.1.tgz'
+    integrity: XXXXX
+    pluginConfig:
+      dynamicPlugins:
+        frontend:
+          ansible.plugin-backstage-rhaap:
+            appIcons:
+              - importName: AnsibleLogo
+                name: AnsibleLogo
+            dynamicRoutes:
+              - importName: AnsiblePage
+                menuItem:
+                  icon: AnsibleLogo
+                  text: Ansible
+                path: /ansible
+  - disabled: true
+    package: >-
+      http://plugin-registry:8080/ansible-plugin-scaffolder-backend-module-backstage-rhaap-dynamic-2.1.1.tgz
+    integrity: XXXX
+    pluginConfig:
+      dynamicPlugins:
+        backend:
+          ansible.plugin-scaffolder-backend-module-backstage-rhaap: null
