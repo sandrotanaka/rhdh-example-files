@@ -1,0 +1,33 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: create-namespace-simple
+  title: Criar Namespace OpenShift (direto)
+  description: Cria um namespace diretamente no cluster OpenShift
+spec:
+  owner: user:default/guest
+  type: service
+
+  parameters:
+    - title: Dados do Namespace
+      required:
+        - name
+      properties:
+        name:
+          title: Nome do namespace
+          type: string
+          description: Nome do namespace a ser criado no OpenShift
+          pattern: '^[a-z0-9]([-a-z0-9]*[a-z0-9])?$'
+
+  steps:
+    - id: create-namespace
+      name: Criar namespace no OpenShift
+      action: kubernetes:create-namespace
+      input:
+        name: ${{ parameters.name }}
+        clusterRef: ocp-cluster
+
+  output:
+    text:
+      - title: Namespace criado
+        content: Namespace `${{ parameters.name }}` criado com sucesso.
