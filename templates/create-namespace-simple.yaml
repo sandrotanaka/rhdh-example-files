@@ -1,0 +1,50 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: create-namespace-simple
+  title: Criar Namespace + Registrar no Catálogo
+  description: Cria um namespace no OpenShift e registra no catálogo do Developer Hub
+spec:
+  owner: user:default/guest
+  type: service
+
+  parameters:
+    - title: Dados do Namespace
+      required:
+        - name
+      properties:
+        name:
+          title: Nome do namespace
+          type: string
+          pattern: '^[a-z0-9]([-a-z0-9]*[a-z0-9])?$'
+
+  steps:
+
+    # 1️⃣ Cria o namespace
+    - id: create-namespace
+      name: Criar namespace no OpenShift
+      action: kubernetes:create-namespace
+      input:
+        name: ${{ parameters.name }}
+        clusterRef: default
+
+    # 2️⃣ Gera o catalog-info.yaml dinamicamente
+    - id: create-catalog-info
+      name: Gerar entidade do catálogo
+      action: fetch:template
+      input:
+        url: ./catalog-template
+        values:
+          name: ${{ parameters.name }}
+
+    # 3️⃣ Registra no catálogo
+    - id: register
+      name: Registrar no catálogo
+      action: catalog:register
+      input:
+        catalogInfoPath: ./catalog-template/catalog-info.yaml
+
+  output:
+    text:
+      - title: Namespace criado
+        content: Namespace `${{ parameters.name }}` criado e registrado no catálogo.
