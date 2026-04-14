@@ -1,38 +1,60 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: ansible-job-http-min
-  title: Teste Job Ansible Min
+  name: ansible-job-http-test
+  title: Teste Ansible via HTTP
+  description: Executa um Job Template do Ansible Automation Platform via API HTTP
 spec:
   owner: platform-team
   type: service
 
   parameters:
-    - title: Teste
+    - title: Parâmetros do Job
       required:
-        - mensagem
+        - controllerUrl
+        - jobTemplateId
+        - ansibleToken
       properties:
-        mensagem:
-          title: Mensagem
+        controllerUrl:
+          title: URL do Automation Controller
           type: string
-          default: teste-rhdh
+          default: https://seu-controller.exemplo.com
+          description: URL base do AAP Controller
+
+        jobTemplateId:
+          title: ID do Job Template
+          type: string
+          description: Exemplo 42
+
+        ansibleToken:
+          title: Token do AAP
+          type: string
+          ui:widget: password
+          description: Token Bearer do Automation Controller
+
+        mensagem:
+          title: Mensagem de teste
+          type: string
+          default: hello-from-rhdh
 
   steps:
-    - id: launch
-      name: Launch Job
+    - id: launch-job
+      name: Disparando Job Template no Ansible
       action: http:backstage:request
       input:
         method: POST
-        url: 'https://seu-controller.exemplo.com/api/v2/job_templates/42/launch/'
+        url: '${{ parameters.controllerUrl }}/api/v2/job_templates/${{ parameters.jobTemplateId }}/launch/'
         headers:
           Content-Type: application/json
-          Authorization: 'Bearer ${{ secrets.ANSIBLE_TOKEN }}'
+          Authorization: 'Bearer ${{ parameters.ansibleToken }}'
         body:
           extra_vars:
             mensagem: '${{ parameters.mensagem }}'
 
   output:
     text:
-      - title: API response
+      - title: Resultado
         content: |
-          ${{ steps['launch'].output.body }}
+          Job enviado com sucesso.
+          Resposta da API:
+          ${{ steps['launch-job'].output.body }}
