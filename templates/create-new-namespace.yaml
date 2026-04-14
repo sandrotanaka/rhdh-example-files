@@ -2,9 +2,9 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 
 metadata:
-  name: create-namespace-sa
-  title: Criar Namespace OpenShift (ServiceAccount)
-  description: Cria um namespace no cluster OpenShift usando autenticação via ServiceAccount
+  name: create-namespace-simple
+  title: Criar Namespace no OpenShift
+  description: Cria um namespace no cluster OpenShift usando a action kubernetes:create-namespace
   tags:
     - kubernetes
     - openshift
@@ -18,13 +18,19 @@ spec:
     - title: Dados do Namespace
       required:
         - namespace
+        - token
       properties:
         namespace:
           title: Nome do namespace
           type: string
-          description: Nome do namespace que será criado
+          description: Nome do namespace que será criado no OpenShift
           pattern: '^[a-z0-9]([-a-z0-9]*[a-z0-9])?$'
           ui:autofocus: true
+        token:
+          title: Token do cluster
+          type: string
+          description: Token Bearer para autenticação na API do cluster
+          ui:field: Secret
 
   steps:
     - id: create-namespace
@@ -33,6 +39,7 @@ spec:
       input:
         namespace: ${{ parameters.namespace }}
         clusterRef: ocp-cluster
+        token: ${{ secrets.token }}
 
   output:
     text:
