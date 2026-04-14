@@ -3,8 +3,8 @@ kind: Template
 
 metadata:
   name: create-openshift-namespace
-  title: Criar Namespace no OpenShift
-  description: Provisionamento automático de namespaces
+  title: "Criar Namespace no OpenShift - V3"
+  description: "Provisionamento automático de namespaces no cluster PROCERGS"
   tags:
     - openshift
     - infra
@@ -14,25 +14,58 @@ spec:
   type: service
 
   parameters:
-    - title: Configurações do Projeto
+    - title: "Configurações do Projeto"
       required:
         - namespace
+        - token
+        - url
       properties:
         namespace:
-          title: Nome do Namespace
+          title: "Nome do Namespace"
           type: string
+          description: "Apenas letras minúsculas, números e hífens"
           pattern: '^[a-z0-9]([-a-z0-9]*[a-z0-9])?$'
           ui:autofocus: true
 
+        url:
+          title: "URL da API do OpenShift"
+          type: string
+          description: "Exemplo: https://api.seu-cluster.exemplo.com:6443"
+
+        token:
+          title: "Token de Acesso"
+          type: string
+          description: "Token Bearer para autenticação na API do cluster"
+          ui:field: Secret
+
+        skipTLSVerify:
+          title: "Ignorar validação TLS"
+          type: boolean
+          default: true
+
+        labels:
+          title: "Labels"
+          type: string
+          description: "Formato: chave=valor;chave2=valor2"
+          default: "kubernetes.io/type=namespace;managed-by=rhdh"
+
   steps:
     - id: create-kubernetes-namespace
-      name: Criar namespace
+      name: "Criando namespace no OpenShift"
       action: kubernetes:create-namespace
       input:
         namespace: ${{ parameters.namespace }}
-        clusterRef: ocp-cluster
+        url: ${{ parameters.url }}
+        token: ${{ secrets.token }}
+        skipTLSVerify: ${{ parameters.skipTLSVerify }}
+        labels: ${{ parameters.labels }}
 
   output:
+    text:
+      - title: "Resultado"
+        content: |
+          O namespace `${{ parameters.namespace }}` foi enviado para criação com sucesso.
+
     links:
-      - title: Acessar Console do OpenShift
-        url: https://console-openshift-console.apps.XXX.dynamic.redhatworkshops.io/k8s/cluster/projects/${{ parameters.namespace }}
+      - title: "Abrir projeto no console"
+        url: ${{ parameters.url }}
