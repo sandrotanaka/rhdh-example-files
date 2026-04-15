@@ -1,1 +1,23 @@
 
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: projects-dev
+  namespace: openshift-gitops
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/sandrotanaka/devhub-demo.git
+    targetRevision: main
+    path: clusters/dev/projects
+    directory:
+      recurse: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: openshift-gitops
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
