@@ -29,7 +29,7 @@ spec:
       action: http:backstage:request
       input:
         method: POST
-        path: /proxy/aap/api/v2/job_templates/${{ parameters.jobTemplateId }}/launch/
+        path: /proxy/aap/api/controller/v2/job_templates/${{ parameters.jobTemplateId }}/launch/
         headers:
           Content-Type: application/json
           Accept: application/json
