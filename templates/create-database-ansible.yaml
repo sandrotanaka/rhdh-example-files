@@ -30,9 +30,9 @@ spec:
         ambiente:
           title: Ambiente
           type: string
-          enum: ['D', 'H', 'P']
-          enumNames: ['Desenvolvimento', 'Homologação', 'Produção']
-          default: 'D'
+          enum: ['L','D', 'H', 'P']
+          enumNames: ['Laboratório','Desenvolvimento', 'Homologação', 'Produção']
+          default: 'L'
 
         nome_cliente:
           title: Nome do Cliente
