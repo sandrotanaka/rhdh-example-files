@@ -1,0 +1,8 @@
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: lab-platform
+  title: Lab Platform
+  description: Plataforma de laboratório baseada em OpenShift
+spec:
+  owner: group:default/platform-team
