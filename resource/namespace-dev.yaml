@@ -1,0 +1,19 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: ns-meu-namespace-dev
+  description: Namespace Kubernetes do ambiente DEV
+  tags:
+    - kubernetes
+    - namespace
+    - dev
+  annotations:
+    backstage.io/kubernetes-id: teste01
+    backstage.io/kubernetes-namespace: teste01
+    backstage.io/kubernetes-label-selector: 'app=poc'
+    backstage.io/managed-by-location: url:https://github.com/sua-org/seu-repo
+spec:
+  type: kubernetes-namespace
+  owner: group:default/platform-team
+  system: lab-platform
+  lifecycle: development
