@@ -10,8 +10,8 @@ metadata:
   annotations:
     backstage.io/kubernetes-id: teste01
     backstage.io/kubernetes-namespace: teste01
-    backstage.io/kubernetes-label-selector: 'app=poc'
-    backstage.io/managed-by-location: url:https://github.com/sua-org/seu-repo
+    #backstage.io/kubernetes-label-selector: 'app=poc'
+    backstage.io/managed-by-location: url:https://github.com/sandrotanaka/rhdh-example-files/blob/main/resource/namespace-dev.yaml
 spec:
   type: kubernetes-namespace
   owner: group:default/platform-team
