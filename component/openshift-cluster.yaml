@@ -1,0 +1,20 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: openshift-lab-cluster
+  title: OpenShift Lab Cluster
+  description: Cluster OpenShift de laboratório integrado ao Red Hat Developer Hub
+  tags:
+    - openshift
+    - kubernetes
+    - lab
+    - rhdh
+    - poc
+  annotations:
+    backstage.io/kubernetes-id: ocp-cluster
+    backstage.io/kubernetes-label-selector: 'managed-by=rhdh'
+spec:
+  type: kubernetes-cluster
+  lifecycle: experimental
+  owner: group:default/platform-team
+  system: default-lab-platform
