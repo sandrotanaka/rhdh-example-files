@@ -1,4 +1,22 @@
 apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: default-lab-platform
+  title: Lab Platform
+  description: Plataforma de laboratório baseada em OpenShift para uso no RHDH
+spec:
+  owner: group:default/platform-team
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: platform-team
+spec:
+  type: team
+  profile:
+    displayName: Platform Team
+---
+apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: openshift-lab-cluster
@@ -10,6 +28,10 @@ metadata:
     - lab
     - rhdh
     - poc
+  links:
+    - url: https://console-openshift-console.apps.killab4840.lab.intra.rs.gov.br
+      title: OpenShift Console
+      icon: dashboard
   annotations:
     backstage.io/kubernetes-id: ocp-cluster
     backstage.io/kubernetes-label-selector: 'managed-by=rhdh'
