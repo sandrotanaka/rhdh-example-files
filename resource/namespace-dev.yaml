@@ -17,6 +17,7 @@ metadata:
     backstage.io/view-url: https://github.com/sandrotanaka/rhdh-example-files/blob/main/resource/namespace-dev.yaml
 
     argocd/app-name: projects-dev
+    argocd/app-selector: projects-dev
     argocd/app-namespace: openshift-gitops
 spec:
   type: kubernetes-namespace
