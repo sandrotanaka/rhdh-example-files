@@ -1,0 +1,9 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: ocp-cluster
+  description: Cluster OpenShift de laboratório
+spec:
+  type: kubernetes-cluster
+  owner: group:default/platform-team
+  system: lab-platform
