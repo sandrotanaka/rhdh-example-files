@@ -2,7 +2,8 @@ apiVersion: backstage.io/v1alpha1
 kind: Group
 metadata:
   name: platform-team
-  description: Time responsável pela plataforma OpenShift e RHDH
+  title: Platform Team
+  description: Time responsável pela plataforma OpenShift e pelo Red Hat Developer Hub
 spec:
   type: team
   profile:
@@ -13,17 +14,35 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
-  name: default-lab-platform
+  name: lab-platform
   title: Lab Platform
-  description: Plataforma de laboratório baseada em OpenShift
+  description: Plataforma de laboratório baseada em OpenShift para testes, PoCs e automações via RHDH
 spec:
   owner: group:default/platform-team
 
 ---
 apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: ocp-cluster
+  title: OpenShift Lab Cluster Resource
+  description: Recurso de infraestrutura referente ao cluster OpenShift de laboratório
+  tags:
+    - openshift
+    - kubernetes
+    - lab
+    - rhdh
+    - procergs
+spec:
+  type: kubernetes-cluster
+  owner: group:default/platform-team
+  system: lab-platform
+
+---
+apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: killab4840-lab-cluster
+  name: openshift-lab-cluster
   title: OpenShift Lab Cluster
   description: Cluster OpenShift de laboratório integrado ao Red Hat Developer Hub
   tags:
@@ -31,10 +50,14 @@ metadata:
     - kubernetes
     - lab
     - rhdh
+    - poc
   links:
     - url: https://console-openshift-console.apps.killab4840.lab.intra.rs.gov.br
       title: OpenShift Console
       icon: dashboard
+    - url: https://backstage-developer-hub-devhub.apps.killab4840.lab.intra.rs.gov.br
+      title: Red Hat Developer Hub
+      icon: web
   annotations:
     backstage.io/kubernetes-id: ocp-cluster
     backstage.io/kubernetes-label-selector: 'managed-by=rhdh'
@@ -42,4 +65,6 @@ spec:
   type: kubernetes-cluster
   lifecycle: experimental
   owner: group:default/platform-team
-  system: default-lab-platform
+  system: lab-platform
+  dependsOn:
+    - resource:default/ocp-cluster
