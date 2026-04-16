@@ -1,0 +1,55 @@
+plugins:
+  - package: ./dynamic-plugins/dist/backstage-community-plugin-scaffolder-backend-module-kubernetes-dynamic
+    disabled: false
+  - package: ./dynamic-plugins/dist/backstage-plugin-scaffolder-backend-module-github-dynamic
+    disabled: false
+  - package: ./dynamic-plugins/dist/roadiehq-scaffolder-backend-module-http-request-dynamic
+    disabled: false
+  # Ansible Plugins
+  - disabled: false
+    package: 'http://plugin-registry:8080/ansible-plugin-backstage-rhaap-dynamic-2.1.1.tgz'
+    integrity: sha512-1pZ+qjVEs5pouyjhufxzLBKcZ4frsZYhEZbUJcMgc9ukshLkFOOOIV/PXIfmUfCYQuwDlPxwK1OoU7vjMOiRYA==
+    pluginConfig:
+      dynamicPlugins:
+        frontend:
+          ansible.plugin-backstage-rhaap:
+            appIcons:
+              - importName: AnsibleLogo
+                name: AnsibleLogo
+            dynamicRoutes:
+              - importName: AnsiblePage
+                menuItem:
+                  icon: AnsibleLogo
+                  text: Ansible
+                path: /ansible
+  - disabled: true
+    package: 'http://plugin-registry:8080/ansible-plugin-scaffolder-backend-module-backstage-rhaap-dynamic-2.1.1.tgz'
+    integrity: sha512-0V3LJ5IFfMmsHUcybP9oA7YU8WheoVyrmE9YTyEiv4MDzg2wXFZODmqKDoPDm6Yp3+OWDbSaAP0obeogg0XVSA==
+    pluginConfig:
+      dynamicPlugins:
+        backend:
+          ansible.plugin-scaffolder-backend-module-backstage-rhaap: null
+  # Microsoft Azure Plugins
+  - package: oci://ghcr.io/redhat-developer/rhdh-plugin-export-overlays/backstage-community-plugin-search-backend-module-azure-devops:bs_1.45.3__0.1.2
+    disable: false
+  #- package: ./dynamic-plugins/dist/backstage-plugin-catalog-backend-module-msgraph-dynamic
+  #  disabled: false
+  - package: oci://ghcr.io/redhat-developer/rhdh-plugin-export-overlays/backstage-community-plugin-search-backend-module-azure-devops:bs_1.45.3__0.1.2
+    disabled: false
+  - package: oci://ghcr.io/redhat-developer/rhdh-plugin-export-overlays/red-hat-developer-hub-backstage-plugin-scaffolder-backend-module-orchestrator:bs_1.45.3__1.3.4
+    disabled: false
+  - package: oci://ghcr.io/redhat-developer/rhdh-plugin-export-overlays/backstage-community-plugin-catalog-backend-module-azure-devops-annotator-processor:bs_1.45.3__0.14.0
+    disabled: false
+  - package: oci://ghcr.io/redhat-developer/rhdh-plugin-export-overlays/backstage-community-plugin-azure-devops-backend:bs_1.45.3__0.23.0
+    disabled: false
+  - package: oci://ghcr.io/redhat-developer/rhdh-plugin-export-overlays/backstage-community-plugin-azure-devops:bs_1.45.3__0.23.0
+    disabled: false
+  - package: oci://ghcr.io/redhat-developer/rhdh-plugin-export-overlays/backstage-community-plugin-scaffolder-backend-module-azure-devops:bs_1.45.3__0.18.0
+    disabled: false
+  # ARGOCD Plugins
+  - package: oci://ghcr.io/redhat-developer/rhdh-plugin-export-overlays/backstage-community-plugin-argocd-backend:bs_1.45.3__1.0.2
+    disabled: false
+  #- package: oci://ghcr.io/redhat-developer/rhdh-plugin-export-overlays/roadiehq-backstage-plugin-argo-cd-backend:bs_1.45.3__4.0.6
+  #  disabled: false
+  #- package: oci://ghcr.io/redhat-developer/rhdh-plugin-export-overlays/roadiehq-scaffolder-backend-argocd:bs_1.45.3__1.8.1
+  #  disabled: false
