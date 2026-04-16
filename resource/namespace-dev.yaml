@@ -1,7 +1,7 @@
 apiVersion: backstage.io/v1alpha1
 kind: Resource
 metadata:
-  name: ns-meu-namespace-dev
+  name: teste01
   description: Namespace Kubernetes do ambiente DEV
   tags:
     - kubernetes
